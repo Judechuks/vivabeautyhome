@@ -1,6 +1,7 @@
 // const express = require("express");
 import express from "express"; // to use this, add "type":"module" in the package.json
 import productRoutes from "./routes/productRoutes.js";
+import HandleErrorMiddleware from "./middleware/error.js";
 const app = express(); // for defining routes and middleware
 
 // endpoints with route handler (i.e the callback function)
@@ -15,6 +16,9 @@ app.use(express.json()); // to parse JSON data in the request body
 
 // Route using middlewares
 app.use("/api/v1", productRoutes);
+
+// error middleware
+app.use(HandleErrorMiddleware);
 
 export default app;
 // module.exports = app;

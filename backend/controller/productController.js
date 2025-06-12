@@ -1,5 +1,6 @@
 import productModel from "../models/productModel.js";
 import HandleError from "../utils/handleError.js";
+import handleAsyncError from "../middleware/handleAsyncError.js";
 
 // 1. creating products
 export const createProducts = async (req, res) => {
@@ -10,17 +11,17 @@ export const createProducts = async (req, res) => {
 };
 
 // 2. Get all products
-export const getAllProducts = async (req, res) => {
+export const getAllProducts = handleAsyncError(async (req, res, next) => {
   const products = await productModel.find();
   res.status(200).json({
     success: true,
     message: "Products fetched successfully",
     products,
   });
-};
+});
 
 // 3. Update a product
-export const updateProduct = async (req, res, next) => {
+export const updateProduct = handleAsyncError(async (req, res, next) => {
   const { id } = req.params;
   const product = await productModel.findByIdAndUpdate(id, req.body, {
     new: true, // to return the updated document not the old document
@@ -35,10 +36,10 @@ export const updateProduct = async (req, res, next) => {
       product,
     });
   }
-};
+});
 
 // 4. Delete product
-export const deleteProduct = async (req, res, next) => {
+export const deleteProduct = handleAsyncError(async (req, res, next) => {
   const { id } = req.params;
   const product = await productModel.findByIdAndDelete(id);
   if (!product) {
@@ -49,10 +50,10 @@ export const deleteProduct = async (req, res, next) => {
       message: "Product deleted successfully",
     });
   }
-};
+});
 
 // 5. Get a product
-export const getSingleProduct = async (req, res, next) => {
+export const getSingleProduct = handleAsyncError(async (req, res, next) => {
   const { id } = req.params;
   const product = await productModel.findById(id, {
     // new: true, // to return the updated document
@@ -67,4 +68,4 @@ export const getSingleProduct = async (req, res, next) => {
       product,
     });
   }
-};
+});

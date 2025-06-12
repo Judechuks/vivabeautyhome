@@ -26,5 +26,3 @@ process.on("unhandledRejection", (err) => {
     process.exit(1); // Exit the process with failure
   });
 });
-
-p;

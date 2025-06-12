@@ -1,6 +1,7 @@
 import productModel from "../models/productModel.js";
 import HandleError from "../utils/handleError.js";
 import handleAsyncError from "../middleware/handleAsyncError.js";
+import APIFunctionality from "../utils/apiFunctionality.js";
 
 // 1. creating products
 export const createProducts = async (req, res) => {
@@ -12,11 +13,39 @@ export const createProducts = async (req, res) => {
 
 // 2. Get all products
 export const getAllProducts = handleAsyncError(async (req, res, next) => {
-  const products = await productModel.find();
+  const resultPerPage = 6; // number of products per page
+  const apiFeatures = new APIFunctionality(productModel.find(), req.query)
+    .search()
+    .filter();
+
+  // Getting filtered query before pagination
+  const filteredQuery = apiFeatures.query.clone();
+  const totalProducts = await filteredQuery.countDocuments();
+
+  // calculating total pages
+  const totalPages = Math.ceil(totalProducts / resultPerPage);
+  const page = Number(req.query.page) || 1; // current page, default is 1
+
+  if (page > totalPages && totalProducts > 0) {
+    return next(new HandleError("This page does not exist", 404));
+  }
+
+  // Applying pagination to the query
+  apiFeatures.pagination(resultPerPage); // the number of products per page
+  const products = await apiFeatures.query;
+  if (!products || products.length === 0) {
+    return next(new HandleError("No product found", 404));
+  }
   res.status(200).json({
     success: true,
     message: "Products fetched successfully",
     products,
+    totalProducts,
+    resultPerPage,
+    totalPages,
+    currentPage: page,
+    hasNextPage: page < totalPages, // true if there is a next page
+    hasPreviousPage: page > 1, // true if there is a previous page
   });
 });
 

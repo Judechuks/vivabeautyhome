@@ -23,6 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# AI agent
+.qodo
+
 # My Ignore Files & Folder
 *.env
 Rough Work

@@ -1,4 +1,5 @@
 import productModel from "../models/productModel.js";
+import HandleError from "../utils/handleError.js";
 
 // 1. creating products
 export const createProducts = async (req, res) => {
@@ -19,17 +20,14 @@ export const getAllProducts = async (req, res) => {
 };
 
 // 3. Update a product
-export const updateProduct = async (req, res) => {
+export const updateProduct = async (req, res, next) => {
   const { id } = req.params;
   const product = await productModel.findByIdAndUpdate(id, req.body, {
     new: true, // to return the updated document not the old document
     runValidators: true, // to run validation on the updated document
   });
   if (!product) {
-    return res.status(404).json({
-      success: false,
-      message: "Product not found",
-    });
+    return next(new HandleError("Product not found", 404)); // next allows to move to the next middleware, in this case the error handling middleware
   } else {
     res.status(200).json({
       success: true,
@@ -40,13 +38,11 @@ export const updateProduct = async (req, res) => {
 };
 
 // 4. Delete product
-export const deleteProduct = async (req, res) => {
+export const deleteProduct = async (req, res, next) => {
   const { id } = req.params;
   const product = await productModel.findByIdAndDelete(id);
   if (!product) {
-    return res
-      .status(404)
-      .json({ success: false, message: "Product not found" });
+    return next(new HandleError("Product not found", 404));
   } else {
     res.status(200).json({
       success: true,
@@ -56,17 +52,14 @@ export const deleteProduct = async (req, res) => {
 };
 
 // 5. Get a product
-export const getSingleProduct = async (req, res) => {
+export const getSingleProduct = async (req, res, next) => {
   const { id } = req.params;
   const product = await productModel.findById(id, {
     // new: true, // to return the updated document
     // runValidators: true, // to run validation on the updated document
   });
   if (!product) {
-    return res.status(404).json({
-      success: false,
-      message: "Product not found",
-    });
+    return next(new HandleError("Product not found", 404));
   } else {
     res.status(200).json({
       success: true,

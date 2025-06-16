@@ -6,7 +6,7 @@ export default (err, req, res, next) => {
 
   // CastError
   if (err.name === "CastError") {
-    const message = `This is invalid resource, coming from the path: ${err.path}`;
+    const message = `This is an invalid resource, coming from the path: ${err.path}`;
     err = new HandleError(message, 404);
   }
 

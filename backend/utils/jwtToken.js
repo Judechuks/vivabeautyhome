@@ -1,4 +1,4 @@
-export const sendToken = (user, statusCode, res) => {
+export const sendToken = (user, statusCode, res, msg) => {
   const token = user.getJwtToken();
   // option for cookies
   const options = {
@@ -12,13 +12,7 @@ export const sendToken = (user, statusCode, res) => {
     .cookie("token", token, options)
     .json({
       success: true,
-      message: "User authenticated successfully",
-      user: {
-        name: user.name,
-        phone: user.phone,
-        email: user.email,
-        avatar: user.avatar,
-        role: user.role,
-      },
+      message: msg || "User authenticated successfully",
+      user,
     });
 };

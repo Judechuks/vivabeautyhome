@@ -79,7 +79,7 @@ const Header = () => {
   // Default Nav Link if no user [For Mobile]
 
   return (
-    <header className="px-3 py-5 flex gap-2 items-center justify-between bg-gray-50 dark:bg-gray-900 dark:text-white shadow dark:shadow-md">
+    <header className="px-3 md:px-5 py-5 flex gap-2 items-center justify-between bg-gray-50 dark:bg-gray-900 dark:text-white shadow dark:shadow-md">
       <Logo />
       <div className="flex-1">
         {/* Desktop navigation */}

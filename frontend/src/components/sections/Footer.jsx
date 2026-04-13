@@ -31,7 +31,7 @@ const Footer = () => {
   return (
     <footer className="bg-gray-50 dark:bg-gray-900 dark:text-white py-6 md:pt-12 border-t-2 border-t-gray-300 dark:border-t-gray-700">
       {/* Hide footer on mobile devices, show these details in the about us page instead */}
-      <div className="hidden md:block containr mx-auto px-3">
+      <div className="hidden md:block containr mx-auto px-3 md:px-5">
         <div className="md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="mb-6">
             <h3 className="text-xl font-bold mb-4">

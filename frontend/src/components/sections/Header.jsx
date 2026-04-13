@@ -134,7 +134,7 @@ const Header = () => {
       </div>
 
       {/* Mobile Bottom Navigation Dock */}
-      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-[60] pb-safe flex items-center justify-around h-16 px-2">
+      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-[60] pb-safe flex items-center justify-around h-16 sm:px-2">
         {mobileNavLinks.slice(0, 3).map((link) => {
           if (link.hideWhenLoggedIn && user) return null;
           if (link.auth && !user) return null;
@@ -209,7 +209,7 @@ const Header = () => {
                 More Options
               </h3>
               <div className="flex flex-col">
-                {mobileNavLinks.slice(2).map((link) => {
+                {mobileNavLinks.slice(3).map((link) => {
                   if (link.hideWhenLoggedIn && user) return null;
                   if (link.auth && !user) return null;
                   return (
@@ -222,21 +222,7 @@ const Header = () => {
                   );
                 })}
 
-                {/* Inside More Menu Option if no user is logged in */}
-                {/* {!user &&  (
-                  <>
-                    <button
-                      onClick={() => handleNavClick("/login", false)}
-                      className="text-left w-full py-3 px-4 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 font-medium my-1">
-                      Login
-                    </button>
-                    <button
-                      onClick={() => handleNavClick("/signup", false)}
-                      className="text-left w-full py-3 px-4 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 font-medium my-1">
-                      Signup
-                    </button>
-                  </>
-                ) : null} */}
+                {/* Inside More Menu Option if any other menu is to be added there */}
 
                 {/* Toggle theme right inside the 'More' slider */}
                 <div className="flex flex-col w-full py-4 px-4 rounded-2xl text-gray-700 dark:text-gray-200 bg-gray-50 dark:bg-gray-900/50 mt-4 border border-gray-100 dark:border-gray-700/50">

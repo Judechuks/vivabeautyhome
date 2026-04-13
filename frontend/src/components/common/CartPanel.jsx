@@ -6,11 +6,11 @@ const CartPanel = () => {
 
   return (
     <div
-      className="relative size-7 p-1 mr-4 sm:ml-4 grid place-items-center cursor-pointer"
+      className="relative size-6 p-1 mr-4 sm:ml-4 grid place-items-center cursor-pointer"
       onClick={() => navigate("/cart")}>
       <FaCartShopping className="text-xl" />
-      <span className="absolute -right-4 -top-3 w-7 h-7 rounded-full grid place-items-center font-semibold text-sm text-white bg-amber-700">
-        0
+      <span className="absolute -right-4 -top-3 w-6 h-6 rounded-full grid place-items-center font-semibold text-sm text-white bg-amber-700">
+        05
       </span>
     </div>
   );

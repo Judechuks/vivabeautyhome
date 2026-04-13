@@ -6,7 +6,8 @@ const PublicPageLayout = () => {
   return (
     <div className="page-layout grid min-h-dvh bg-gray-50 dark:bg-gray-900 dark:text-white">
       <Header />
-      <main className="px-3 md:px-5">
+      {/* <main className="px-3 md:px-5"> */}
+      <main className="">
         <Outlet />
       </main>
       <Footer />

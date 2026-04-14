@@ -9,15 +9,16 @@ import ProfileMenu from "../common/ProfileMenu";
 import { SVGICONS } from "../icon/SVGICON";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
+
   const user = false;
   // const user = {
   //   firstName: "Emeke",
   //   lastName: "Monye",
   //   email: "emeke@gmail.com",
   // };
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
 
   const activePath = (path) => {
     const currentPath = location.pathname;
@@ -29,6 +30,15 @@ const Header = () => {
     return currentPath.startsWith(path);
   };
 
+  const handleNavClick = (path, requiresAuth) => {
+    setMoreMenuOpen(false); // close bottom more menu if open
+    if (requiresAuth && !user) {
+      navigate("/login");
+    } else {
+      navigate(path);
+    }
+  };
+
   const handleLogout = () => {
     console.log("Logged out Successfully");
   };
@@ -38,26 +48,34 @@ const Header = () => {
     {
       name: "Home",
       path: "/",
+      auth: false,
+      hideWhenLoggedIn: false,
       isActive: activePath("/"),
     },
     {
       name: "Products",
       path: "/products",
+      auth: false,
+      hideWhenLoggedIn: false,
       isActive: activePath("/products"),
     },
     {
       name: "Contact Us",
       path: "/contact-us",
+      auth: false,
+      hideWhenLoggedIn: false,
       isActive: activePath("/contact-us"),
     },
     {
       name: "About Us",
       path: "/about-us",
+      auth: false,
+      hideWhenLoggedIn: false,
       isActive: activePath("/about-us"),
     },
   ];
 
-  // Mobile NavLinks
+  // Default Nav Link if no user [For Mobile]
   const noUserMenu = [
     {
       name: "Sign in",
@@ -75,8 +93,6 @@ const Header = () => {
     },
   ];
   const mobileNavLinks = [...deskTopNavLinks, ...noUserMenu];
-
-  // Default Nav Link if no user [For Mobile]
 
   return (
     <header className="px-3 md:px-5 py-5 flex gap-2 items-center justify-between bg-gray-50 dark:bg-gray-900 dark:text-white shadow dark:shadow-md">
@@ -167,7 +183,7 @@ const Header = () => {
             <button
               type="button"
               key={link.name}
-              onClick={() => navigate(link.path)}
+              onClick={() => handleNavClick(link.path, link.auth)}
               className={`flex flex-col items-center justify-center flex-1 max-w-[80px] h-full cursor-pointer ${
                 link.isActive
                   ? "text-brand-500"
@@ -183,7 +199,8 @@ const Header = () => {
 
         {/* More Options trigger */}
         <button
-          onClick={() => setMoreMenuOpen(!moreMenuOpen)}
+          type="button"
+          onClick={() => setMoreMenuOpen((initialValue) => !initialValue)}
           className={`flex flex-col items-center justify-center flex-1 max-w-[80px] h-full cursor-pointer ${
             moreMenuOpen
               ? "text-brand-500"
@@ -214,8 +231,9 @@ const Header = () => {
                   if (link.auth && !user) return null;
                   return (
                     <button
+                      type="button"
                       key={link.name}
-                      onClick={() => navigate(link.path)}
+                      onClick={() => handleNavClick(link.path, link.auth)}
                       className="text-left w-full py-3 px-4 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 font-medium my-1 cursor-pointer">
                       {link.name}
                     </button>

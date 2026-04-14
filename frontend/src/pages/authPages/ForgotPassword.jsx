@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import Input from "../../components/form/input/InputField";
 import HomeAndTheme from "../../components/common/HomeAndTheme";
+import BrandID from "../../components/logo/BrandID";
 
 const ForgotPassword = () => {
   return (
     <main className="flex min-hscreen p6 bg-gray-50 dark:bg-gray-900">
       <div className="flex-1 h-full max-w-4xlmx-auto overflow-hidden rounded-lg shadow-xl">
         <section className="flex flex-col min-h-screen poverflow-y-auto md:flex-row">
-          <article className="h-32 md:h-auto md:w-1/2">
+          <article className="h-32 md:h-auto md:w-1/2 relative md:border-r-2 border-gray-200 dark:border-gray-800">
             <img
               aria-hidden="true"
               className="object-cover w-full h-full dark:hidden"
@@ -20,6 +21,10 @@ const ForgotPassword = () => {
               src="./src/assets/img/forgot-password-office-dark.jpeg"
               alt="Office"
             />
+            {/* brand logo and tagline */}
+            <div className="absolute inset-0 p-1 grid place-items-center bg-white/40 dark:bg-black/40 backdrop-blur-xs">
+              <BrandID tagline />
+            </div>
           </article>
           <article className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <form className="w-full">
